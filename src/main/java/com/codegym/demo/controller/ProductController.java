@@ -4,19 +4,21 @@ import com.codegym.demo.model.Product;
 import com.codegym.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleContextResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Pageable;
 import java.util.Locale;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class ProductController {
 
     @Autowired
@@ -25,15 +27,11 @@ public class ProductController {
     @Autowired
     private MessageSource messageSource;
 
-//    @GetMapping
-//    public ModelAndView loginForm(){
-//        ModelAndView modelAndView = new ModelAndView("login");
-//        return modelAndView;
-//    }
-
-    @GetMapping("user")
+    @GetMapping("/user")
     public ModelAndView showAllProductUser(@RequestParam("s") Optional<String> s, @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "7") int size){
+        String s1 = messageSource.getMessage("homepage.add", null, LocaleContextHolder.getLocale());
+        System.out.println(s);
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> products;
         if (s.isPresent()){
@@ -47,7 +45,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     public ModelAndView showAllProductAdmin(@RequestParam("s") Optional<String> s, @PageableDefault(value = 7) Pageable pageable){
 //        Pageable pageable = PageRequest.of(page,size);
         Page<Product> products;
@@ -61,14 +59,6 @@ public class ProductController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
-
-//    @GetMapping()
-//    public ModelAndView showAllProductAdmin(){
-//        Iterable<Product> products = productService.findAll();
-//        ModelAndView modelAndView = new ModelAndView("admin/homepage");
-//        modelAndView.addObject("products", products);
-//        return modelAndView;
-//    }
 
     @GetMapping("/create")
     public ModelAndView showCreateForm(){
@@ -126,4 +116,9 @@ public class ProductController {
         productService.remove(product.getProductId());
         return "redirect:/";
     }
+
+//    @GetMapping("/accessDenied")
+//    public String accessDenied(){
+//        return "error.404";
+//    }
 }
