@@ -46,8 +46,9 @@ public class ProductController {
     }
 
     @GetMapping("/admin")
-    public ModelAndView showAllProductAdmin(@RequestParam("s") Optional<String> s, @PageableDefault(value = 7) Pageable pageable){
-//        Pageable pageable = PageRequest.of(page,size);
+    public ModelAndView showAllProductAdmin(@RequestParam("s") Optional<String> s, @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "7") int size){
+        Pageable pageable = PageRequest.of(page,size);
         Page<Product> products;
         if (s.isPresent()){
             products = productService.findAllByName(s.get(),pageable) ;
@@ -117,8 +118,8 @@ public class ProductController {
         return "redirect:/";
     }
 
-//    @GetMapping("/accessDenied")
-//    public String accessDenied(){
-//        return "error.404";
-//    }
+    @GetMapping("/accessDenied")
+    public String accessDenied(){
+        return "error.404";
+    }
 }

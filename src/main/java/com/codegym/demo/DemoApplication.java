@@ -23,33 +23,6 @@ import java.util.Locale;
 @SpringBootApplication
 public class DemoApplication {
 
-//    @Bean
-//    public MessageSource messageSource(){
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasename("message");
-//        messageSource.setDefaultEncoding("UTF-8");
-//        return messageSource;
-//    }
-
-    //    @Override
-//    public void addInterceptors(InterceptorRegistry registry){
-//        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-//        interceptor.setParamName("lang");
-//        registry.addInterceptor(interceptor);
-//    }
-//
-//    @Bean
-//    public LocaleResolver localeResolver(){
-//        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-//        localeResolver.setDefaultLocale(new Locale("en"));
-//        return localeResolver;
-//    }
-//
-//    @Override
-//    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-//
-//    }
-//
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
